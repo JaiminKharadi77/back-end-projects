@@ -1,11 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors"; // Import cors
 
 const app = express();
 const port = 5000;
 
+app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // to handle JSON body
+app.use(bodyParser.json());
 
 let post = [];
 
@@ -26,7 +28,7 @@ app.post("/add", (req, res) => {
   res.json({ message: "Post added", post: newPost });
 });
 
-// Edit a post by ID
+// Edit a post
 app.put("/edit", (req, res) => {
   const { title, desc, id } = req.body;
   const index = post.findIndex((p) => p.id == Number(id));
@@ -38,11 +40,11 @@ app.put("/edit", (req, res) => {
   }
 });
 
-// Delete a post by ID
+// Delete a post
 app.delete("/delete", (req, res) => {
   const { id } = req.body;
+  console.log(req.body);
   const index = post.findIndex((p) => p.id == Number(id));
-
   if (index !== -1) {
     post.splice(index, 1);
     res.json({ message: "Post deleted" });
