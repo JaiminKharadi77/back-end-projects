@@ -25,7 +25,7 @@ app.post("/add", (req, res) => {
     desc,
   };
   post.push(newPost);
-  res.json({ message: "Post added", post: newPost });
+  res.json({ message: "Post added", id: newPost.id });
 });
 
 // Edit a post
@@ -43,7 +43,6 @@ app.put("/edit", (req, res) => {
 // Delete a post
 app.delete("/delete", (req, res) => {
   const { id } = req.body;
-  console.log(req.body);
   const index = post.findIndex((p) => p.id == Number(id));
   if (index !== -1) {
     post.splice(index, 1);
